@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexoTech - Tecnología para todos</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrar usuario</a>
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero__text">
+        <h1>Tecnología al alcance de tu mano</h1>
+        <p>Encuentra los mejores productos tecnológicos con la mejor calidad y precio del mercado.</p>
+        <a href="productos.html" class="btn btn-primary">Ver productos</a>
+      </div>
+      <div class="hero__image">
+        <img src="../img/hero-banner.jpg" alt="Productos tecnológicos NexoTech">
+      </div>
+    </section>
+
+    <section class="featured-products container">
+      <h2>Productos destacados</h2>
+      <div id="product-list" class="product-grid">
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="footer__newsletter">
+        <p>Suscríbete a nuestro newsletter</p>
+        <form>
+          <input type="email" placeholder="Ingresa tu correo">
+          <button type="submit" class="btn btn-primary">Suscribir</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/productos.js"></script>
+  <script src="../js/carrito.js"></script>
+</body>
+</html>
