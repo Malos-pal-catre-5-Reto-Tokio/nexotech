@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi carrito de compras - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="carrito.html" class="cart-link" aria-current="page">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="cart-page container">
+      <h1>Mi carrito de compras</h1>
+
+      <div class="cart-page__content">
+        <div id="cart-items" class="cart-items">
+          <!-- Ítems generados dinámicamente por carrito.js -->
+          <p id="cart-empty-msg" class="cart-empty-msg">Tu carrito está vacío.</p>
+        </div>
+
+        <aside class="cart-summary">
+          <div class="cart-summary__row">
+            <span>Total</span>
+            <span id="cart-total">$0</span>
+          </div>
+
+          <div class="form-group">
+            <label for="cupon">Cupón de descuento</label>
+            <div class="cart-summary__coupon">
+              <input type="text" id="cupon" placeholder="Ingresa el cupón de descuento">
+              <button id="btn-aplicar-cupon" class="btn btn-secondary">Aplicar</button>
+            </div>
+          </div>
+
+          <button id="btn-pagar" class="btn btn-primary cart-summary__pagar">Pagar</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/carrito.js"></script>
+</body>
+</html>
