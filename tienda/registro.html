@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de usuario - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-page container">
+      <form id="registro-form" class="auth-card auth-card--wide" novalidate>
+        <h2>Registro de usuario</h2>
+
+        <div class="form-group">
+          <label for="run">RUN</label>
+          <input type="text" id="run" name="run" minlength="7" maxlength="9" placeholder="Ej: 19011022K" required>
+          <span class="error-message">Ingresa un RUN válido, sin puntos ni guion (7 a 9 caracteres).</span>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" maxlength="50" required>
+          <span class="error-message">El nombre es obligatorio (máx. 50 caracteres).</span>
+        </div>
+
+        <div class="form-group">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" id="apellidos" name="apellidos" maxlength="100" required>
+          <span class="error-message">Los apellidos son obligatorios (máx. 100 caracteres).</span>
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" maxlength="100" required>
+          <span class="error-message">Ingresa un correo válido (@duoc.cl, @profesor.duoc.cl o @gmail.com).</span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmar-correo">Confirmar correo</label>
+          <input type="email" id="confirmar-correo" name="confirmar-correo" maxlength="100" required>
+          <span class="error-message">Los correos no coinciden.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" name="contrasena" required>
+          <span class="error-message">La contraseña debe tener entre 4 y 10 caracteres.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmar-contrasena">Confirmar contraseña</label>
+          <input type="password" id="confirmar-contrasena" name="confirmar-contrasena" required>
+          <span class="error-message">Las contraseñas no coinciden.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono (opcional)</label>
+          <input type="tel" id="telefono" name="telefono">
+        </div>
+
+        <div class="form-group">
+          <label for="fecha-nacimiento">Fecha de nacimiento (opcional)</label>
+          <input type="date" id="fecha-nacimiento" name="fecha-nacimiento">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="region">Región</label>
+            <select id="region" name="region" required>
+              <option value="">-- Seleccione la región --</option>
+            </select>
+            <span class="error-message">Selecciona una región.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="comuna">Comuna</label>
+            <select id="comuna" name="comuna" required>
+              <option value="">-- Seleccione la comuna --</option>
+            </select>
+            <span class="error-message">Selecciona una comuna.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input type="text" id="direccion" name="direccion" maxlength="300" required>
+          <span class="error-message">La dirección es obligatoria (máx. 300 caracteres).</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-card__submit">Registrar</button>
+
+        <p class="auth-card__link">
+          ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/regiones-comunas.js"></script>
+  <script src="../js/validaciones-tienda.js"></script>
+</body>
+</html>
