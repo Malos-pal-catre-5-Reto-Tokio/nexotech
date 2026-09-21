@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html" aria-current="page">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrar usuario</a>
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="blogs-page container">
+      <h1>Noticias importantes</h1>
+
+      <article class="blog-card">
+        <div class="blog-card__text">
+          <h2>El primer computador personal</h2>
+          <p>
+            Descubre la historia del Altair 8800, considerado por muchos el primer
+            computador personal de la historia y cómo marcó el inicio de la revolución
+            tecnológica que hoy disfrutamos.
+          </p>
+          <a href="blog-detalle-1.html" class="btn btn-secondary">Ver caso</a>
+        </div>
+        <img src="../img/blog/blog-1.jpg" alt="Caso curioso 1">
+      </article>
+
+      <article class="blog-card">
+        <div class="blog-card__text">
+          <h2>¿Por qué los cargadores son tan lentos?</h2>
+          <p>
+            Te explicamos de forma simple cómo funciona la carga rápida en celulares y
+            notebooks, y por qué no todos los cargadores entregan la misma velocidad.
+          </p>
+          <a href="blog-detalle-2.html" class="btn btn-secondary">Ver caso</a>
+        </div>
+        <img src="../img/blog/blog-2.jpg" alt="Caso curioso 2">
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
