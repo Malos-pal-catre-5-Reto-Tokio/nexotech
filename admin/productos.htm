@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos - Panel Administrador NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__brand">
+        <span class="logo">NexoTech</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <ul>
+          <li><a href="index.html">📊 Dashboard</a></li>
+          <li><a href="productos.html" aria-current="page">📦 Productos</a></li>
+          <li><a href="usuarios.html">👤 Usuarios</a></li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="../tienda/index.html">🚪 Volver a la tienda</a>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <span class="admin-topbar__user">Administrador</span>
+      </header>
+
+      <main class="admin-main">
+        <div class="admin-main__header">
+          <h1>Productos</h1>
+          <a href="producto-form.html" class="btn btn-primary">+ Nuevo producto</a>
+        </div>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="tabla-productos">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-productos-body">
+              <!-- Filas generadas dinámicamente por productos-admin.js (commit #22) -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>
