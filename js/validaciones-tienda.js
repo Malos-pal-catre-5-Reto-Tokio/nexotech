@@ -1,3 +1,4 @@
+// Validaciones de formularios de la tienda: login, registro y contacto
 
 const REGEX_CORREO = /^[^\s@]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
 const REGEX_RUN = /^[0-9]{6,8}[0-9kK]$/;
@@ -109,6 +110,32 @@ if (registroForm) {
     if (formularioValido) {
       alert('Registro exitoso.');
       registroForm.reset();
+    }
+  });
+}
+
+// ===== CONTACTO =====
+const contactoForm = document.getElementById('contacto-form');
+
+if (contactoForm) {
+  const nombreInput = document.getElementById('nombre');
+  const correoInput = document.getElementById('correo');
+  const comentarioInput = document.getElementById('comentario');
+
+  nombreInput.addEventListener('blur', () => validarRequerido(nombreInput, 100));
+  correoInput.addEventListener('blur', () => validarCorreo(correoInput));
+  comentarioInput.addEventListener('blur', () => validarRequerido(comentarioInput, 500));
+
+  contactoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nombreOk = validarRequerido(nombreInput, 100);
+    const correoOk = validarCorreo(correoInput);
+    const comentarioOk = validarRequerido(comentarioInput, 500);
+
+    if (nombreOk && correoOk && comentarioOk) {
+      alert('Mensaje enviado correctamente. Gracias por contactarnos.');
+      contactoForm.reset();
     }
   });
 }
