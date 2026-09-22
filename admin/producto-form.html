@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo Producto - Panel Administrador NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__brand">
+        <span class="logo">NexoTech</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <ul>
+          <li><a href="index.html">📊 Dashboard</a></li>
+          <li><a href="productos.html" aria-current="page">📦 Productos</a></li>
+          <li><a href="usuarios.html">👤 Usuarios</a></li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="../tienda/index.html">🚪 Volver a la tienda</a>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <span class="admin-topbar__user">Administrador</span>
+      </header>
+
+      <main class="admin-main">
+        <h1 id="form-titulo">Nuevo Producto</h1>
+
+        <form id="producto-form" class="admin-form" novalidate>
+          <div class="form-group">
+            <label for="codigo">Código producto</label>
+            <input type="text" id="codigo" name="codigo" minlength="3" required>
+            <span class="error-message">El código es obligatorio (mínimo 3 caracteres).</span>
+          </div>
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" maxlength="100" required>
+            <span class="error-message">El nombre es obligatorio (máx. 100 caracteres).</span>
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción (opcional)</label>
+            <textarea id="descripcion" name="descripcion" rows="4" maxlength="500"></textarea>
+            <span class="error-message">La descripción no puede superar los 500 caracteres.</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" id="precio" name="precio" min="0" step="0.01" required>
+              <span class="error-message">El precio es obligatorio y no puede ser negativo (0 = producto FREE).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" name="stock" min="0" step="1" required>
+              <span class="error-message">El stock es obligatorio, entero y no puede ser negativo.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="stock-critico">Stock crítico (opcional)</label>
+              <input type="number" id="stock-critico" name="stock-critico" min="0" step="1">
+              <span class="error-message">El stock crítico debe ser un número entero mayor o igual a 0.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" name="categoria" required>
+                <option value="">-- Seleccione una categoría --</option>
+                <option value="notebooks">Notebooks</option>
+                <option value="celulares">Celulares</option>
+                <option value="accesorios">Accesorios</option>
+                <option value="componentes">Componentes</option>
+              </select>
+              <span class="error-message">Selecciona una categoría.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="imagen">Imagen (opcional)</label>
+            <input type="file" id="imagen" name="imagen" accept="image/*">
+          </div>
+
+          <div class="admin-form__actions">
+            <a href="productos.html" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>
