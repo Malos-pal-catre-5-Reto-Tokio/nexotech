@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuarios - Panel Administrador NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__brand">
+        <span class="logo">NexoTech</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <ul>
+          <li><a href="index.html">📊 Dashboard</a></li>
+          <li><a href="productos.html">📦 Productos</a></li>
+          <li><a href="usuarios.html" aria-current="page">👤 Usuarios</a></li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="../tienda/index.html">🚪 Volver a la tienda</a>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <span class="admin-topbar__user">Administrador</span>
+      </header>
+
+      <main class="admin-main">
+        <div class="admin-main__header">
+          <h1>Usuarios</h1>
+          <a href="usuario-form.html" class="btn btn-primary">+ Nuevo usuario</a>
+        </div>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="tabla-usuarios">
+            <thead>
+              <tr>
+                <th>RUN</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Tipo</th>
+                <th>Región</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-usuarios-body">
+              <!-- Filas generadas dinámicamente por usuarios-admin.js (commit #22) -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>

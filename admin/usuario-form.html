@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo Usuario - Panel Administrador NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__brand">
+        <span class="logo">NexoTech</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <ul>
+          <li><a href="index.html">📊 Dashboard</a></li>
+          <li><a href="productos.html">📦 Productos</a></li>
+          <li><a href="usuarios.html" aria-current="page">👤 Usuarios</a></li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="../tienda/index.html">🚪 Volver a la tienda</a>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <span class="admin-topbar__user">Administrador</span>
+      </header>
+
+      <main class="admin-main">
+        <h1 id="form-titulo">Nuevo Usuario</h1>
+
+        <form id="usuario-form" class="admin-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="run">RUN</label>
+              <input type="text" id="run" name="run" minlength="7" maxlength="9" placeholder="Ej: 19011022K" required>
+              <span class="error-message">Ingresa un RUN válido, sin puntos ni guion (7 a 9 caracteres).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="tipo-usuario">Tipo de usuario</label>
+              <select id="tipo-usuario" name="tipo-usuario" required>
+                <option value="">-- Seleccione un perfil --</option>
+                <option value="administrador">Administrador</option>
+                <option value="vendedor">Vendedor</option>
+                <option value="cliente">Cliente</option>
+              </select>
+              <span class="error-message">Selecciona un tipo de usuario.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" maxlength="50" required>
+              <span class="error-message">El nombre es obligatorio (máx. 50 caracteres).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="apellidos">Apellidos</label>
+              <input type="text" id="apellidos" name="apellidos" maxlength="100" required>
+              <span class="error-message">Los apellidos son obligatorios (máx. 100 caracteres).</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" maxlength="100" required>
+            <span class="error-message">Ingresa un correo válido (@duoc.cl, @profesor.duoc.cl o @gmail.com).</span>
+          </div>
+
+          <div class="form-group">
+            <label for="fecha-nacimiento">Fecha de nacimiento (opcional)</label>
+            <input type="date" id="fecha-nacimiento" name="fecha-nacimiento">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="region">Región</label>
+              <select id="region" name="region" required>
+                <option value="">-- Seleccione la región --</option>
+              </select>
+              <span class="error-message">Selecciona una región.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="comuna">Comuna</label>
+              <select id="comuna" name="comuna" required>
+                <option value="">-- Seleccione la comuna --</option>
+              </select>
+              <span class="error-message">Selecciona una comuna.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" maxlength="300" required>
+            <span class="error-message">La dirección es obligatoria (máx. 300 caracteres).</span>
+          </div>
+
+          <div class="admin-form__actions">
+            <a href="usuarios.html" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/regiones-comunas.js"></script>
+</body>
+</html>

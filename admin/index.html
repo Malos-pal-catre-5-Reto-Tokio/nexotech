@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__brand">
+        <span class="logo">NexoTech</span>
+      </div>
+
+      <nav class="admin-sidebar__nav">
+        <ul>
+          <li><a href="index.html" aria-current="page">📊 Dashboard</a></li>
+          <li><a href="productos.html">📦 Productos</a></li>
+          <li><a href="usuarios.html">👤 Usuarios</a></li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="../tienda/index.html">🚪 Volver a la tienda</a>
+      </div>
+    </aside>
+
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <span class="admin-topbar__user">Administrador</span>
+      </header>
+
+      <main class="admin-main">
+        <h1>¡Hola, Administrador!</h1>
+        <p class="admin-main__subtitle">Bienvenido al panel de gestión de NexoTech.</p>
+
+        <section class="admin-stats">
+          <article class="admin-stat-card">
+            <span class="admin-stat-card__label">Productos activos</span>
+            <span class="admin-stat-card__value">10</span>
+          </article>
+          <article class="admin-stat-card">
+            <span class="admin-stat-card__label">Usuarios registrados</span>
+            <span class="admin-stat-card__value">0</span>
+          </article>
+          <article class="admin-stat-card">
+            <span class="admin-stat-card__label">Productos con stock crítico</span>
+            <span class="admin-stat-card__value">2</span>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>
