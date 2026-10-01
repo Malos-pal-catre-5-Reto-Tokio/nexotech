@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html" aria-current="page">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrar usuario</a>
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="products-page container">
+      <h1>Nuestros productos</h1>
+
+      <div class="products-page__toolbar">
+        <label for="filtro-categoria">Filtrar por categoría</label>
+        <select id="filtro-categoria">
+          <option value="todas">Todas las categorías</option>
+          <option value="notebooks">Notebooks</option>
+          <option value="celulares">Celulares</option>
+          <option value="accesorios">Accesorios</option>
+          <option value="componentes">Componentes</option>
+        </select>
+      </div>
+
+      <div id="product-list" class="product-grid">
+        <!-- Los productos se renderizan dinámicamente con productos.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../js/productos.js"></script>
+  <script src="../js/carrito.js"></script>
+</body>
+</html>
