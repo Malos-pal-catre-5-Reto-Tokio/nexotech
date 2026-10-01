@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrador - NexoTech</title>
+  <title>Productos - Panel Administrador NexoTech</title>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/admin.css">
@@ -18,8 +18,8 @@
 
       <nav class="admin-sidebar__nav">
         <ul>
-          <li><a href="index.html" aria-current="page">📊 Dashboard</a></li>
-          <li><a href="productos.html">📦 Productos</a></li>
+          <li><a href="index.html">📊 Dashboard</a></li>
+          <li><a href="productos.html" aria-current="page">📦 Productos</a></li>
           <li><a href="usuarios.html">👤 Usuarios</a></li>
         </ul>
       </nav>
@@ -42,27 +42,33 @@
       </header>
 
       <main class="admin-main">
-        <h1>¡Hola, Administrador!</h1>
-        <p class="admin-main__subtitle">Bienvenido al panel de gestión de NexoTech.</p>
+        <div class="admin-main__header">
+          <h1>Productos</h1>
+          <a href="producto-form.html" class="btn btn-primary">+ Nuevo producto</a>
+        </div>
 
-        <section class="admin-stats">
-          <article class="admin-stat-card">
-            <span class="admin-stat-card__label">Productos activos</span>
-            <span class="admin-stat-card__value">10</span>
-          </article>
-          <article class="admin-stat-card">
-            <span class="admin-stat-card__label">Usuarios registrados</span>
-            <span class="admin-stat-card__value">0</span>
-          </article>
-          <article class="admin-stat-card">
-            <span class="admin-stat-card__label">Productos con stock crítico</span>
-            <span class="admin-stat-card__value">2</span>
-          </article>
-        </section>
+        <div class="admin-table-wrapper">
+          <table class="admin-table" id="tabla-productos">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-productos-body">
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
   </div>
 
+  <script src="../js/productos.js"></script>
+  <script src="../js/validaciones-admin.js"></script>
   <script src="../js/admin-roles.js"></script>
 </body>
 </html>

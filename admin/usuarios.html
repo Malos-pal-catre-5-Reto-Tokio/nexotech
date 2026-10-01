@@ -31,6 +31,13 @@
 
     <div class="admin-content">
       <header class="admin-topbar">
+        <div class="admin-topbar__rol">
+          <label for="selector-rol">Rol activo (simulado):</label>
+          <select id="selector-rol">
+            <option value="administrador">Administrador</option>
+            <option value="vendedor">Vendedor</option>
+          </select>
+        </div>
         <span class="admin-topbar__user">Administrador</span>
       </header>
 
@@ -53,7 +60,6 @@
               </tr>
             </thead>
             <tbody id="tabla-usuarios-body">
-              <!-- Filas generadas dinámicamente por usuarios-admin.js (commit #22) -->
             </tbody>
           </table>
         </div>
@@ -61,5 +67,7 @@
     </div>
   </div>
 
+  <script src="../js/validaciones-admin.js"></script>
+  <script src="../js/admin-roles.js"></script>
 </body>
 </html>

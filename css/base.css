@@ -117,3 +117,13 @@ h3 { font-size: var(--font-size-lg); }
 .form-group.invalid textarea {
   border-color: var(--color-error);
 }
+
+/* ===== RESPONSIVE GENERAL ===== */
+@media (max-width: 480px) {
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  h1 { font-size: var(--font-size-xl); }
+  h2 { font-size: var(--font-size-lg); }
+}
