@@ -351,6 +351,124 @@
   font-size: var(--font-size-lg);
 }
 
+/* ===== DETALLE / CARRITO - COMPLEMENTOS ===== */
+[hidden] {
+  display: none !important;
+}
+
+.product-detail__categoria {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.product-detail__gallery img#producto-imagen-principal {
+  background-color: var(--color-surface);
+  padding: var(--space-md);
+  max-height: 460px;
+  object-fit: contain;
+}
+
+.stock-estado {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.stock-estado--disponible {
+  color: var(--color-success);
+}
+
+.stock-estado--agotado {
+  color: var(--color-error);
+}
+
+.product-detail__cantidad {
+  margin: var(--space-md) 0;
+}
+
+.product-detail__acciones {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.product-detail__acciones .product-detail__btn {
+  flex: 1;
+  min-width: 160px;
+  width: auto;
+}
+
+.product-detail__acciones .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cart-item__info a {
+  font-weight: 600;
+  display: block;
+}
+
+.cart-item__info span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.btn-eliminar {
+  display: block;
+  margin-top: var(--space-xs);
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cart-item__subtotal {
+  min-width: 90px;
+  text-align: right;
+}
+
+.cart-summary__row--total {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+
+.cart-summary__row:not(.cart-summary__row--total) {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  max-width: 320px;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius);
+  background-color: var(--color-secondary);
+  color: #fff;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 1000;
+}
+
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast--error {
+  background-color: var(--color-error);
+}
+
 /* ===== FOOTER ===== */
 .footer {
   background-color: var(--color-secondary);

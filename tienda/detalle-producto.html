@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de producto - NexoTech</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">NexoTech</a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="productos.html" aria-current="page">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrar usuario</a>
+        <a href="carrito.html" class="cart-link">
+          🛒 Carrito (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-detail container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="index.html">Home</a> /
+        <a href="productos.html">Productos</a> /
+        <span id="breadcrumb-nombre">Producto</span>
+      </nav>
+
+      <div class="product-detail__content">
+        <div class="product-detail__gallery">
+          <img id="producto-imagen-principal" src="" alt="">
+        </div>
+
+        <div class="product-detail__info">
+          <p id="producto-categoria" class="product-detail__categoria"></p>
+          <h1 id="producto-nombre">Cargando…</h1>
+          <p id="producto-precio" class="product-detail__precio"></p>
+          <p id="producto-descripcion" class="product-detail__descripcion"></p>
+          <p id="stock-estado" class="stock-estado"></p>
+          <p id="stock-alerta" class="stock-alerta"></p>
+
+          <div class="form-group product-detail__cantidad">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" value="1" min="1" step="1">
+          </div>
+
+          <div class="product-detail__acciones">
+            <button id="btn-agregar-carrito" class="btn btn-primary product-detail__btn">Añadir al carrito</button>
+            <button id="btn-comprar-ahora" class="btn btn-secondary product-detail__btn">Comprar ahora</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="related-products" id="seccion-relacionados">
+        <h2>Productos relacionados</h2>
+        <div id="related-product-list" class="product-grid product-grid--compact"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <h3>NexoTech</h3>
+        <p>Tu tienda de tecnología de confianza.</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../js/productos.js"></script>
+  <script src="../js/carrito.js"></script>
+</body>
+</html>

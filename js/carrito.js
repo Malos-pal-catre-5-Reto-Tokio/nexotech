@@ -1,9 +1,15 @@
 
 const CARRITO_KEY = 'nexotech_carrito';
+const CUPON_KEY = 'nexotech_cupon';
+const CUPONES = { NEXO10: 0.1 };
 
 function obtenerCarrito() {
-  const data = localStorage.getItem(CARRITO_KEY);
-  return data ? JSON.parse(data) : [];
+  try {
+    const data = JSON.parse(localStorage.getItem(CARRITO_KEY));
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
 }
 
 function guardarCarrito(carrito) {
@@ -11,9 +17,45 @@ function guardarCarrito(carrito) {
   actualizarContadorCarrito();
 }
 
-function agregarAlCarrito(producto, cantidad) {
+function obtenerCupon() {
+  const codigo = localStorage.getItem(CUPON_KEY);
+  return codigo && CUPONES[codigo] ? codigo : null;
+}
+
+function formatearMoneda(valor) {
+  return valor.toLocaleString('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+}
+
+function mostrarAviso(mensaje, tipo = 'ok') {
+  let aviso = document.getElementById('toast');
+  if (!aviso) {
+    aviso = document.createElement('div');
+    aviso.id = 'toast';
+    aviso.className = 'toast';
+    aviso.setAttribute('role', 'status');
+    document.body.appendChild(aviso);
+  }
+  aviso.textContent = mensaje;
+  aviso.className = `toast toast--${tipo} toast--visible`;
+  clearTimeout(mostrarAviso.timer);
+  mostrarAviso.timer = setTimeout(() => aviso.classList.remove('toast--visible'), 2800);
+}
+
+function agregarAlCarrito(producto, cantidad, opciones = {}) {
   const carrito = obtenerCarrito();
   const itemExistente = carrito.find((item) => item.id === producto.id);
+  const enCarrito = itemExistente ? itemExistente.cantidad : 0;
+
+  if (enCarrito + cantidad > producto.stock) {
+    const disponibles = producto.stock - enCarrito;
+    mostrarAviso(
+      disponibles > 0
+        ? `Solo puedes añadir ${disponibles} unidad(es) más de este producto.`
+        : 'Ya tienes todo el stock disponible en tu carrito.',
+      'error'
+    );
+    return false;
+  }
 
   if (itemExistente) {
     itemExistente.cantidad += cantidad;
@@ -23,21 +65,28 @@ function agregarAlCarrito(producto, cantidad) {
       nombre: producto.nombre,
       precio: producto.precio,
       imagen: producto.imagen,
+      stock: producto.stock,
       cantidad,
     });
   }
 
   guardarCarrito(carrito);
-  alert(`${producto.nombre} añadido al carrito.`);
+  if (!opciones.silencioso) mostrarAviso(`${producto.nombre} añadido al carrito.`);
+  return true;
 }
 
 function actualizarCantidadCarrito(id, nuevaCantidad) {
   let carrito = obtenerCarrito();
+  const item = carrito.find((i) => i.id === id);
+  if (!item) return;
+
   if (nuevaCantidad <= 0) {
-    carrito = carrito.filter((item) => item.id !== id);
+    carrito = carrito.filter((i) => i.id !== id);
+  } else if (item.stock && nuevaCantidad > item.stock) {
+    mostrarAviso(`Stock máximo disponible: ${item.stock}.`, 'error');
+    return;
   } else {
-    const item = carrito.find((i) => i.id === id);
-    if (item) item.cantidad = nuevaCantidad;
+    item.cantidad = nuevaCantidad;
   }
   guardarCarrito(carrito);
   renderizarCarrito();
@@ -46,13 +95,8 @@ function actualizarCantidadCarrito(id, nuevaCantidad) {
 function actualizarContadorCarrito() {
   const contadorEl = document.getElementById('cart-count');
   if (!contadorEl) return;
-  const carrito = obtenerCarrito();
-  const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  const totalItems = obtenerCarrito().reduce((acc, item) => acc + item.cantidad, 0);
   contadorEl.textContent = totalItems;
-}
-
-function formatearMoneda(valor) {
-  return valor.toLocaleString('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
 }
 
 function renderizarCarrito() {
@@ -61,65 +105,75 @@ function renderizarCarrito() {
 
   const carrito = obtenerCarrito();
   const mensajeVacio = document.getElementById('cart-empty-msg');
+  const descuentoFila = document.getElementById('cart-discount-row');
 
   contenedor.innerHTML = '';
 
   if (carrito.length === 0) {
+    mensajeVacio.innerHTML = 'Tu carrito está vacío. <a href="productos.html">Ver productos</a>';
     contenedor.appendChild(mensajeVacio);
+    document.getElementById('cart-subtotal').textContent = formatearMoneda(0);
     document.getElementById('cart-total').textContent = formatearMoneda(0);
+    descuentoFila.hidden = true;
     return;
   }
 
-  let total = 0;
+  let subtotal = 0;
 
   carrito.forEach((item) => {
-    total += item.precio * item.cantidad;
+    subtotal += item.precio * item.cantidad;
 
     const fila = document.createElement('div');
     fila.className = 'cart-item';
     fila.innerHTML = `
       <img src="${item.imagen}" alt="${item.nombre}">
       <div class="cart-item__info">
-        <p>${item.nombre}</p>
-        <span>${formatearMoneda(item.precio)}</span>
+        <a href="detalle-producto.html?id=${item.id}">${item.nombre}</a>
+        <span>${formatearMoneda(item.precio)} c/u</span>
+        <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
       </div>
       <div class="cart-item__cantidad">
-        <button class="btn-restar" data-id="${item.id}">−</button>
+        <button class="btn-restar" data-id="${item.id}" aria-label="Restar una unidad">−</button>
         <span>${item.cantidad}</span>
-        <button class="btn-sumar" data-id="${item.id}">+</button>
+        <button class="btn-sumar" data-id="${item.id}" aria-label="Sumar una unidad">+</button>
       </div>
+      <strong class="cart-item__subtotal">${formatearMoneda(item.precio * item.cantidad)}</strong>
     `;
     contenedor.appendChild(fila);
   });
 
-  document.getElementById('cart-total').textContent = formatearMoneda(total);
+  const cupon = obtenerCupon();
+  const descuento = cupon ? Math.round(subtotal * CUPONES[cupon]) : 0;
 
-  contenedor.querySelectorAll('.btn-sumar').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      const item = obtenerCarrito().find((i) => i.id === id);
-      actualizarCantidadCarrito(id, item.cantidad + 1);
-    });
-  });
+  document.getElementById('cart-subtotal').textContent = formatearMoneda(subtotal);
+  descuentoFila.hidden = descuento === 0;
+  document.getElementById('cart-discount').textContent = `-${formatearMoneda(descuento)}`;
+  document.getElementById('cart-total').textContent = formatearMoneda(subtotal - descuento);
 
-  contenedor.querySelectorAll('.btn-restar').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.id);
-      const item = obtenerCarrito().find((i) => i.id === id);
-      actualizarCantidadCarrito(id, item.cantidad - 1);
-    });
-  });
+  const cambiar = (btn, delta) => {
+    const id = Number(btn.dataset.id);
+    const item = obtenerCarrito().find((i) => i.id === id);
+    if (item) actualizarCantidadCarrito(id, item.cantidad + delta);
+  };
+  contenedor.querySelectorAll('.btn-sumar').forEach((btn) => btn.addEventListener('click', () => cambiar(btn, 1)));
+  contenedor.querySelectorAll('.btn-restar').forEach((btn) => btn.addEventListener('click', () => cambiar(btn, -1)));
+  contenedor.querySelectorAll('.btn-eliminar').forEach((btn) =>
+    btn.addEventListener('click', () => actualizarCantidadCarrito(Number(btn.dataset.id), 0))
+  );
 }
 
 const btnCupon = document.getElementById('btn-aplicar-cupon');
 
 if (btnCupon) {
   btnCupon.addEventListener('click', () => {
-    const codigo = document.getElementById('cupon').value.trim().toUpperCase();
-    if (codigo === 'NEXO10') {
-      alert('Cupón aplicado: 10% de descuento.');
+    const input = document.getElementById('cupon');
+    const codigo = input.value.trim().toUpperCase();
+    if (CUPONES[codigo]) {
+      localStorage.setItem(CUPON_KEY, codigo);
+      mostrarAviso(`Cupón ${codigo} aplicado: ${CUPONES[codigo] * 100}% de descuento.`);
+      renderizarCarrito();
     } else {
-      alert('Cupón inválido.');
+      mostrarAviso('Cupón inválido.', 'error');
     }
   });
 }
@@ -129,10 +183,11 @@ const btnPagar = document.getElementById('btn-pagar');
 if (btnPagar) {
   btnPagar.addEventListener('click', () => {
     if (obtenerCarrito().length === 0) {
-      alert('Tu carrito está vacío.');
+      mostrarAviso('Tu carrito está vacío.', 'error');
       return;
     }
-    alert('Compra simulada realizada con éxito.');
+    mostrarAviso('Compra simulada realizada con éxito.');
+    localStorage.removeItem(CUPON_KEY);
     guardarCarrito([]);
     renderizarCarrito();
   });

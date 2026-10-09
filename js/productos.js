@@ -58,28 +58,64 @@ const nombreEl = document.getElementById('producto-nombre');
 if (nombreEl) {
   const params = new URLSearchParams(window.location.search);
   const id = Number(params.get('id'));
-  const producto = PRODUCTOS.find((p) => p.id === id) || PRODUCTOS[0];
+  const producto = PRODUCTOS.find((p) => p.id === id);
 
-  document.getElementById('breadcrumb-nombre').textContent = producto.nombre;
-  nombreEl.textContent = producto.nombre;
-  document.getElementById('producto-precio').textContent = formatearPrecio(producto.precio);
-  document.getElementById('producto-descripcion').textContent = producto.descripcion;
-  document.getElementById('producto-imagen-principal').src = producto.imagen;
-  document.getElementById('producto-imagen-principal').alt = producto.nombre;
+  if (!producto) {
+    document.querySelector('.product-detail__content').innerHTML =
+      '<p>El producto que buscas no existe. <a href="productos.html">Volver al catálogo</a></p>';
+    document.getElementById('seccion-relacionados').hidden = true;
+  } else {
+    document.title = `${producto.nombre} - NexoTech`;
+    document.getElementById('breadcrumb-nombre').textContent = producto.nombre;
+    nombreEl.textContent = producto.nombre;
+    document.getElementById('producto-categoria').textContent = producto.categoria;
+    document.getElementById('producto-precio').textContent = formatearPrecio(producto.precio);
+    document.getElementById('producto-descripcion').textContent = producto.descripcion;
+    document.getElementById('producto-imagen-principal').src = producto.imagen;
+    document.getElementById('producto-imagen-principal').alt = producto.nombre;
 
-  const stockAlertaEl = document.getElementById('stock-alerta');
-  if (producto.stock <= producto.stockCritico) {
-    stockAlertaEl.textContent = `¡Quedan pocas unidades! Stock disponible: ${producto.stock}`;
-  }
+    const stockEstadoEl = document.getElementById('stock-estado');
+    const stockAlertaEl = document.getElementById('stock-alerta');
+    const cantidadEl = document.getElementById('cantidad');
+    const btnAgregar = document.getElementById('btn-agregar-carrito');
+    const btnComprar = document.getElementById('btn-comprar-ahora');
 
-  const btnAgregar = document.getElementById('btn-agregar-carrito');
-  if (btnAgregar) {
-    btnAgregar.addEventListener('click', () => {
-      const cantidad = Number(document.getElementById('cantidad').value);
-      agregarAlCarrito(producto, cantidad);
+    if (producto.stock <= 0) {
+      stockEstadoEl.textContent = 'Sin stock';
+      stockEstadoEl.classList.add('stock-estado--agotado');
+      cantidadEl.disabled = true;
+      btnAgregar.disabled = true;
+      btnComprar.disabled = true;
+    } else {
+      stockEstadoEl.textContent = 'En stock';
+      stockEstadoEl.classList.add('stock-estado--disponible');
+      cantidadEl.max = producto.stock;
+      if (producto.stock <= producto.stockCritico) {
+        stockAlertaEl.textContent = `¡Quedan pocas unidades! Stock disponible: ${producto.stock}`;
+      }
+    }
+
+    function leerCantidad() {
+      const cantidad = Math.floor(Number(cantidadEl.value));
+      if (!Number.isFinite(cantidad) || cantidad < 1) return 1;
+      return Math.min(cantidad, producto.stock);
+    }
+
+    cantidadEl.addEventListener('change', () => {
+      cantidadEl.value = leerCantidad();
     });
-  }
 
-  const relacionados = PRODUCTOS.filter((p) => p.categoria === producto.categoria && p.id !== producto.id).slice(0, 5);
-  renderizarListaProductos('related-product-list', relacionados);
+    btnAgregar.addEventListener('click', () => {
+      agregarAlCarrito(producto, leerCantidad());
+    });
+
+    btnComprar.addEventListener('click', () => {
+      if (agregarAlCarrito(producto, leerCantidad(), { silencioso: true })) {
+        window.location.href = 'carrito.html';
+      }
+    });
+
+    const relacionados = PRODUCTOS.filter((p) => p.categoria === producto.categoria && p.id !== producto.id).slice(0, 5);
+    renderizarListaProductos('related-product-list', relacionados);
+  }
 }
