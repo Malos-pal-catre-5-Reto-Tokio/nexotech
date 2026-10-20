@@ -41,7 +41,9 @@ function Carrito() {
           {items.map((item) => (
             <tr key={item.id}>
               <td>
-                <img src={item.imagen} alt="" width="48" height="48" className="me-2 rounded" style={{ objectFit: 'contain' }} />
+                {item.imagen && (
+                  <img src={item.imagen} alt="" width="48" height="48" className="me-2 rounded" style={{ objectFit: 'contain' }} />
+                )}
                 {item.nombre}
               </td>
               <td>{formatearPrecio(item.precio)}</td>

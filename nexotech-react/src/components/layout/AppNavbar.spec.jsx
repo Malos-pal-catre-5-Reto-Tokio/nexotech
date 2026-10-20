@@ -63,4 +63,26 @@ describe('AppNavbar', () => {
 
     expect(screen.getByTestId('ubicacion').textContent).toBe('/productos?q=mouse%20gamer');
   });
+
+  it('sin usuario muestra los botones de iniciar sesión y crear cuenta', () => {
+    render(<MemoryRouter><AppNavbar /></MemoryRouter>);
+
+    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Crear cuenta' })).toBeTruthy();
+  });
+
+  it('con usuario muestra su nombre y llama a onCerrarSesion', () => {
+    const onCerrarSesion = jasmine.createSpy('onCerrarSesion');
+    render(
+      <MemoryRouter>
+        <AppNavbar usuario={{ nombre: 'Pedro' }} onCerrarSesion={onCerrarSesion} />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByRole('button', { name: 'Iniciar sesión' })).toBeNull();
+    fireEvent.click(screen.getByText('Hola, Pedro'));
+    fireEvent.click(screen.getByText('Cerrar sesión'));
+
+    expect(onCerrarSesion).toHaveBeenCalledTimes(1);
+  });
 });

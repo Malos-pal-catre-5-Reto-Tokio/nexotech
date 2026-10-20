@@ -10,6 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: http://localhost:5173');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -50,4 +51,36 @@ function cuerpo_json(): array {
 
 function id_solicitado(): ?int {
     return isset($_GET['id']) ? (int) $_GET['id'] : null;
+}
+
+// ---- Sesión de usuario (cookie PHPSESSID) y control de roles ----
+
+function iniciar_sesion(): void {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_set_cookie_params([
+            'lifetime' => 0,          // dura hasta cerrar el navegador
+            'path'     => '/',
+            'httponly' => true,       // JavaScript no puede leer la cookie
+            'samesite' => 'Lax',
+        ]);
+        session_start();
+    }
+}
+
+// Devuelve el usuario con sesión iniciada (sin contraseña) o null.
+function usuario_actual(PDO $pdo): ?array {
+    iniciar_sesion();
+    if (empty($_SESSION['usuario_id'])) return null;
+    $st = $pdo->prepare('SELECT id, run, nombre, apellidos, correo, rol, region, comuna, direccion
+                         FROM usuarios WHERE id = ?');
+    $st->execute([$_SESSION['usuario_id']]);
+    return $st->fetch() ?: null;
+}
+
+// Corta la petición con 401/403 si no hay sesión o el rol no está permitido.
+function requerir_rol(PDO $pdo, array $roles): array {
+    $usuario = usuario_actual($pdo);
+    if (!$usuario) error_api('Debes iniciar sesión.', 401);
+    if (!in_array($usuario['rol'], $roles, true)) error_api('No tienes permisos para esta acción.', 403);
+    return $usuario;
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Form, Button, NavDropdown } from 'react-bootstrap';
 
-function AppNavbar({ totalCarrito = 0 }) {
+function AppNavbar({ totalCarrito = 0, usuario = null, onCerrarSesion = () => {} }) {
   const [busqueda, setBusqueda] = useState('');
   const navegar = useNavigate();
 
@@ -45,8 +45,16 @@ function AppNavbar({ totalCarrito = 0 }) {
           </Form>
 
           <div className="d-flex gap-2">
-            <Button as={Link} to="/login" variant="outline-primary" size="sm">Iniciar sesión</Button>
-            <Button as={Link} to="/registro" variant="primary" size="sm">Crear cuenta</Button>
+            {usuario ? (
+              <NavDropdown title={`Hola, ${usuario.nombre}`} align="end" id="menu-usuario">
+                <NavDropdown.Item as="button" onClick={onCerrarSesion}>Cerrar sesión</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <Button as={Link} to="/login" variant="outline-primary" size="sm">Iniciar sesión</Button>
+                <Button as={Link} to="/registro" variant="primary" size="sm">Crear cuenta</Button>
+              </>
+            )}
             <Button as={Link} to="/carrito" variant="success" size="sm">
               <i className="bi bi-cart3 me-1" />
               Carrito ${totalCarrito.toLocaleString('es-CL')}

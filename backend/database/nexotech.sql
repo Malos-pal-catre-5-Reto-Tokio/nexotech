@@ -53,6 +53,7 @@ CREATE TABLE ordenes (
   region       VARCHAR(80)  NOT NULL,
   comuna       VARCHAR(60)  NOT NULL,
   indicaciones VARCHAR(300),
+  descuento    INT UNSIGNED NOT NULL DEFAULT 0,
   total        INT UNSIGNED NOT NULL,
   estado       ENUM('pagada','fallida','pendiente') NOT NULL DEFAULT 'pendiente',
   creado_en    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -86,3 +87,12 @@ INSERT INTO productos (codigo, nombre, descripcion, precio, stock, stock_critico
  ('CO-001','SSD 1TB SpeedDrive','Disco de estado sólido NVMe de alta velocidad.',59990,18,5,'/img/productos/ssd.jpg',0,4),
  ('CO-002','Memoria RAM 16GB DDR4','Memoria RAM de alto rendimiento para gaming y trabajo pesado.',44990,22,5,'/img/productos/ram.jpg',0,4),
  ('CO-003','Fuente de poder 650W','Fuente de poder certificada 80+ Bronze, 650W.',54990,2,3,'/img/productos/fuente.jpg',0,4);
+
+-- Usuarios de demostración (contraseñas guardadas como hash bcrypt, nunca en texto plano)
+--   admin@duoc.cl    / admin123    (rol admin)
+--   vendedor@duoc.cl / vend123     (rol vendedor)
+--   cliente@gmail.com / cliente123 (rol cliente)
+INSERT INTO usuarios (run, nombre, apellidos, correo, password_hash, rol, region, comuna, direccion) VALUES
+ ('19011022K','Admin','NexoTech','admin@duoc.cl','$2y$10$xth7w5/f2sVg1S7HjjYEleopw6THBXNM0symZ3wGi4MUO99clLOFi','admin','Región Metropolitana de Santiago','Santiago','Av. Libertador Bernardo O\'Higgins 1234'),
+ ('20123456K','Vera','Vendedor','vendedor@duoc.cl','$2y$10$8KSTR2D2AmB6Fj2mNRqsvu0deKayLREEtndBdLLQQm1TnIaWVw8y6','vendedor','Región de Valparaíso','Viña del Mar','Calle Valparaíso 456'),
+ ('21345678K','Pedro','Cliente','cliente@gmail.com','$2y$10$ul1pAHrs2WTlmBGLafJtnu3QCr/SYcsDwVFUVGo6QC5iYZFH/wcGC','cliente','Región de Tarapacá','Iquique','Los Crisantemos 789');
