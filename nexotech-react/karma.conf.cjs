@@ -5,7 +5,7 @@
 process.env.BABEL_ENV = 'test';
 
 module.exports = function (config) {
-  config.set({
+  config.set({ port: 9880,
     basePath: '',
 
     frameworks: ['jasmine', 'webpack'],
@@ -19,10 +19,10 @@ module.exports = function (config) {
     ],
 
     // Un único punto de entrada que carga todos los archivos *.spec.jsx
-    files: [{ pattern: 'src/tests.entry.js', watched: false }],
+    files: [{ pattern: 'src/tests.entry.cjs', watched: false }],
 
     preprocessors: {
-      'src/tests.entry.js': ['webpack'],
+      'src/tests.entry.cjs': ['webpack'],
     },
 
     // webpack compila el JSX de los componentes y de las pruebas

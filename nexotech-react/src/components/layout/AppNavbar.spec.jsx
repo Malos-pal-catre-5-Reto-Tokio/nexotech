@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import AppNavbar from './AppNavbar.jsx';
 
 // La barra usa <Link>, por eso debe renderizarse dentro de un router.
@@ -23,15 +23,16 @@ describe('AppNavbar', () => {
   it('muestra el total del carrito recibido por props', () => {
     renderizarNavbar({ totalCarrito: 15990 });
 
+    // react-bootstrap pinta <Button as={Link}> con role="button".
     // El "." del regex acepta tanto 15.990 como 15,990 según el idioma del navegador
-    const carrito = screen.getByRole('link', { name: /Carrito/ });
+    const carrito = screen.getByRole('button', { name: /Carrito/ });
     expect(carrito.textContent).toMatch(/15.990/);
   });
 
   it('muestra $0 en el carrito cuando no se entrega total', () => {
     renderizarNavbar();
 
-    const carrito = screen.getByRole('link', { name: /Carrito/ });
+    const carrito = screen.getByRole('button', { name: /Carrito/ });
     expect(carrito.textContent).toContain('$0');
   });
 
@@ -43,5 +44,23 @@ describe('AppNavbar', () => {
 
     fireEvent.change(buscador, { target: { value: 'notebook' } });
     expect(buscador.value).toBe('notebook');
+  });
+
+  it('al buscar navega al catálogo con el texto en la URL', () => {
+    function MostrarUbicacion() {
+      const ubicacion = useLocation();
+      return <p data-testid="ubicacion">{ubicacion.pathname + ubicacion.search}</p>;
+    }
+    render(
+      <MemoryRouter>
+        <AppNavbar />
+        <MostrarUbicacion />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('Buscar'), { target: { value: 'mouse gamer' } });
+    fireEvent.submit(screen.getByRole('search'));
+
+    expect(screen.getByTestId('ubicacion').textContent).toBe('/productos?q=mouse%20gamer');
   });
 });

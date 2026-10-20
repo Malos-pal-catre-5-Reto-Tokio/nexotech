@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Form, Button, NavDropdown } from 'react-bootstrap';
 
 function AppNavbar({ totalCarrito = 0 }) {
   const [busqueda, setBusqueda] = useState('');
+  const navegar = useNavigate();
 
   const manejarBusqueda = (e) => {
     e.preventDefault();
-    // La búsqueda se conecta al catálogo en un paso posterior.
+    const texto = busqueda.trim();
+    navegar(texto ? `/productos?q=${encodeURIComponent(texto)}` : '/productos');
   };
 
   return (
@@ -23,6 +25,7 @@ function AppNavbar({ totalCarrito = 0 }) {
             <NavDropdown title="Categorías" id="menu-categorias">
               <NavDropdown.Item as={Link} to="/categorias">Ver todas</NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link as={NavLink} to="/productos">Productos</Nav.Link>
             <Nav.Link as={NavLink} to="/ofertas">Ofertas</Nav.Link>
             <Nav.Link as={NavLink} to="/nosotros">Nosotros</Nav.Link>
             <Nav.Link as={NavLink} to="/blogs">Blog</Nav.Link>

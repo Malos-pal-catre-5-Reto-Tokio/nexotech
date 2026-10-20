@@ -7,7 +7,7 @@ module.exports = {
   env: {
     // En las pruebas se instrumenta el código para calcular la cobertura
     test: {
-      plugins: ['istanbul'],
+      plugins: [['istanbul', { exclude: ['**/*.spec.jsx', '**/*.spec.js', 'src/main.jsx', 'src/testing/**'] }]],
     },
   },
 };
