@@ -13,9 +13,11 @@ function Home() {
   return (
     <>
       <section className="text-center mb-4">
+        <h1 className="h2 mb-3">Bienvenido a NexoTech</h1>
         <img src="/img/hero-banner.jpg" alt="Tecnología al mejor precio" className="img-fluid rounded mb-3" />
-        <h1 className="h3">Bienvenido a NexoTech</h1>
-        <Link to="/productos" className="btn btn-primary">Ver catálogo</Link>
+        <div>
+          <Link to="/productos" className="btn btn-primary">Ver catálogo</Link>
+        </div>
       </section>
 
       <AvisoCarrito aviso={aviso} onCerrar={cerrarAviso} />

@@ -28,4 +28,20 @@ describe('Home', () => {
     expect(await screen.findByText('Mouse ErgoTech')).toBeTruthy();
     expect(screen.getAllByText('Teclado ProType').length).toBe(2); // aparece en ofertas y destacados
   });
+
+  it('muestra el título de bienvenida antes de la imagen principal', () => {
+    api = instalarApiFalsa([['productos.php', []]]);
+
+    render(
+      <MemoryRouter>
+        <CarritoProvider>
+          <Home />
+        </CarritoProvider>
+      </MemoryRouter>
+    );
+
+    const titulo = screen.getByRole('heading', { name: 'Bienvenido a NexoTech' });
+    const imagen = screen.getByAltText('Tecnología al mejor precio');
+    expect(titulo.compareDocumentPosition(imagen) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
 });

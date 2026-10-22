@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { Alert, Button, Card, Form } from 'react-bootstrap';
 import CampoTexto from '../components/forms/CampoTexto.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { validarLogin } from '../utils/validaciones.js';
+import { esPersonal } from '../utils/roles.js';
 
 function Login() {
   const { usuario, iniciarSesion } = useAuth();
-  const navegar = useNavigate();
   const ubicacion = useLocation();
   const [datos, setDatos] = useState({ correo: '', password: '' });
   const [errores, setErrores] = useState({});
   const [errorApi, setErrorApi] = useState(null);
   const [enviando, setEnviando] = useState(false);
 
-  // Quien ya tiene sesión no necesita ver el formulario.
-  if (usuario) return <Navigate to="/" replace />;
+  // Con sesión iniciada se redirige: a la página que se pedía, al panel (personal) o a la tienda.
+  if (usuario) {
+    return <Navigate to={ubicacion.state?.desde ?? (esPersonal(usuario) ? '/admin' : '/')} replace />;
+  }
 
   const cambiar = (campo) => (e) => setDatos({ ...datos, [campo]: e.target.value });
 
@@ -28,8 +30,7 @@ function Login() {
 
     setEnviando(true);
     try {
-      await iniciarSesion(datos.correo.trim(), datos.password);
-      navegar(ubicacion.state?.desde ?? '/', { replace: true }); // vuelve a la página que pedía iniciar sesión
+      await iniciarSesion(datos.correo.trim(), datos.password); // al guardarse el usuario, arriba se redirige
     } catch (error) {
       setErrorApi(error.message);
       setEnviando(false);

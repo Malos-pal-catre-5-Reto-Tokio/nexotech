@@ -84,3 +84,19 @@ function requerir_rol(PDO $pdo, array $roles): array {
     if (!in_array($usuario['rol'], $roles, true)) error_api('No tienes permisos para esta acción.', 403);
     return $usuario;
 }
+
+// ---- Consultas para listados y reportes ----
+
+// Convierte a número los valores que MySQL devuelve como texto numérico (por ejemplo los resultados de SUM).
+function numerizar(array $fila): array {
+    foreach ($fila as $clave => $valor) {
+        if (is_string($valor) && preg_match('/^-?\d+$/', $valor)) $fila[$clave] = (int) $valor;
+    }
+    return $fila;
+}
+
+function consultar(PDO $pdo, string $sql, array $params = []): array {
+    $st = $pdo->prepare($sql);
+    $st->execute($params);
+    return array_map('numerizar', $st->fetchAll());
+}

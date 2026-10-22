@@ -62,4 +62,20 @@ describe('Carrito (página)', () => {
     expect(screen.getByText('Cupón aplicado.')).toBeTruthy();
     expect(total()).toMatch(/9.000/);
   });
+
+  it('disminuir la cantidad a cero quita el producto del carrito', () => {
+    renderizar();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Disminuir cantidad de Mouse' }));
+
+    expect(screen.getByText('Tu carrito está vacío')).toBeTruthy();
+  });
+
+  it('"Vaciar" elimina todos los productos', () => {
+    renderizar();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Vaciar' }));
+
+    expect(screen.getByText('Tu carrito está vacío')).toBeTruthy();
+  });
 });

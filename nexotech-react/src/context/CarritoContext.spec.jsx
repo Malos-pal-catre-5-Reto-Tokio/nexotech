@@ -90,4 +90,24 @@ describe('CarritoContext', () => {
     spyOn(console, 'error'); // React registra el error en consola; se silencia en la prueba
     expect(() => render(<Panel />)).toThrowError(/CarritoProvider/);
   });
+
+  it('si el carrito guardado está dañado, empieza vacío en vez de fallar', () => {
+    localStorage.setItem('nexotech_carrito', '{esto no es json');
+    localStorage.setItem('nexotech_cupon', 'CUPON-INEXISTENTE');
+
+    renderizar();
+
+    expect(texto('cantidad')).toBe('0');
+    expect(texto('total')).toBe('0');
+  });
+
+  it('si el almacenamiento del navegador no está disponible, el carrito funciona en memoria', () => {
+    spyOn(Storage.prototype, 'getItem').and.throwError('almacenamiento bloqueado');
+    spyOn(Storage.prototype, 'setItem').and.throwError('almacenamiento bloqueado');
+
+    renderizar();
+    fireEvent.click(screen.getByText('agregar'));
+
+    expect(texto('cantidad')).toBe('1');
+  });
 });

@@ -133,4 +133,16 @@ describe('Checkout (página)', () => {
     expect(screen.getByLabelText(/Región/).value).toBe('Región de Tarapacá');
     expect(screen.getByLabelText(/Comuna/).value).toBe('Iquique');
   });
+
+  it('se puede cambiar entre pago exitoso y simulación de error antes de pagar', async () => {
+    renderizar();
+    llenarFormulario();
+
+    fireEvent.click(screen.getByLabelText('Simular error en el pago'));
+    fireEvent.click(screen.getByLabelText('Pago exitoso'));
+    pagar();
+
+    expect(await screen.findByText('Llegó a pago correcto')).toBeTruthy();
+    expect(JSON.parse(api.espia.calls.mostRecent().args[1].body).pago).toBe('aprobado');
+  });
 });

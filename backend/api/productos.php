@@ -60,6 +60,7 @@ try {
             responder($st->fetchAll());
 
         case 'POST':
+            requerir_rol($pdo, ['admin']);
             $datos = validar_producto($pdo, cuerpo_json());
             $pdo->prepare('INSERT INTO productos
                 (codigo, nombre, descripcion, precio, stock, stock_critico, imagen, descuento_pct, categoria_id)
@@ -67,6 +68,7 @@ try {
             responder(producto_por_id($pdo, (int) $pdo->lastInsertId()), 201);
 
         case 'PUT':
+            requerir_rol($pdo, ['admin']);
             if (!$id) error_api('Falta el id.');
             if (!producto_por_id($pdo, $id)) error_api('Producto no encontrado.', 404);
             $datos = validar_producto($pdo, cuerpo_json());
@@ -76,6 +78,7 @@ try {
             responder(producto_por_id($pdo, $id));
 
         case 'DELETE':
+            requerir_rol($pdo, ['admin']);
             if (!$id) error_api('Falta el id.');
             $pdo->prepare('DELETE FROM productos WHERE id = ?')->execute([$id]);
             responder(['eliminado' => $id]);

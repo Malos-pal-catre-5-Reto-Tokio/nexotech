@@ -82,8 +82,11 @@ try {
             responder($orden);
         }
         requerir_rol($pdo, ['admin', 'vendedor']); // el listado completo es solo del personal
-        $filas = $pdo->query('SELECT id, nombre, apellidos, correo, total, estado, creado_en AS creadoEn
-                              FROM ordenes ORDER BY id DESC')->fetchAll();
+        $donde = '';
+        $params = [];
+        if (isset($_GET['usuario'])) { $donde = ' WHERE usuario_id = ?'; $params[] = (int) $_GET['usuario']; }
+        $filas = consultar($pdo, 'SELECT id, usuario_id AS usuarioId, nombre, apellidos, correo, total, estado,
+                                  creado_en AS creadoEn FROM ordenes' . $donde . ' ORDER BY id DESC', $params);
         foreach ($filas as &$f) $f['codigo'] = codigo_orden((int) $f['id']);
         unset($f);
         responder($filas);

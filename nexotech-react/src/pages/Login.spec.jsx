@@ -13,6 +13,7 @@ function renderizar() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<p>Página de inicio</p>} />
+          <Route path="/admin" element={<p>Panel de administración</p>} />
         </Routes>
       </AuthProvider>
     </MemoryRouter>
@@ -90,5 +91,22 @@ describe('Login (página)', () => {
     renderizar();
 
     expect(await screen.findByText('Página de inicio')).toBeTruthy();
+  });
+
+  it('si quien inicia sesión es personal (admin o vendedor) va directo al panel de administración', async () => {
+    api.restaurar();
+    api = instalarApiFalsa([
+      ['accion=login', { id: 1, nombre: 'Admin', apellidos: 'NexoTech', correo: 'admin@duoc.cl', rol: 'admin' }],
+      ['auth.php', null],
+    ]);
+    renderizar();
+    await screen.findByRole('button', { name: 'Ingresar' });
+
+    escribir(/Correo/, 'admin@duoc.cl');
+    escribir(/Contraseña/, 'admin123');
+    ingresar();
+
+    expect(await screen.findByText('Panel de administración')).toBeTruthy();
+    expect(screen.queryByText('Página de inicio')).toBeNull();
   });
 });

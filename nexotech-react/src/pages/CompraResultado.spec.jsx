@@ -74,4 +74,13 @@ describe('Vistas de resultado de la compra', () => {
     expect(await screen.findByText('Stock insuficiente para Mouse.')).toBeTruthy();
     expect(screen.getByText(/No se pudo realizar el pago/)).toBeTruthy();
   });
+
+  it('pago con error: si la orden no existe muestra el mensaje de la API', async () => {
+    api = instalarApiFalsa([['ordenes.php?id=99', new Error('Orden no encontrada.')]]);
+
+    renderizar('/compra/error/99');
+
+    expect(await screen.findByText('Orden no encontrada.')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'VOLVER A REALIZAR EL PAGO' })).toBeNull();
+  });
 });

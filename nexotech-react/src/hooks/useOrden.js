@@ -13,5 +13,5 @@ export function useOrden(id) {
     return () => { activo = false; };
   }, [id]);
 
-  return { ...estado, actualizar: (orden) => setEstado({ orden, cargando: false, error: null }) };
+  return estado;
 }

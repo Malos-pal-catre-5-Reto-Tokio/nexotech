@@ -85,6 +85,14 @@ describe('AuthContext', () => {
     expect(await screen.findByText('invitado')).toBeTruthy();
   });
 
+  it('si falla la consulta de la sesión (servidor caído) queda como invitado', async () => {
+    api = instalarApiFalsa([['auth.php', new Error('Error de base de datos.')]]);
+
+    renderizar();
+
+    expect(await screen.findByText('invitado')).toBeTruthy();
+  });
+
   it('useAuth lanza un error si se usa fuera del proveedor', () => {
     api = instalarApiFalsa([]);
     spyOn(console, 'error');

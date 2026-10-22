@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { esPersonal } from '../../utils/roles.js';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Form, Button, NavDropdown } from 'react-bootstrap';
 
@@ -47,6 +48,9 @@ function AppNavbar({ totalCarrito = 0, usuario = null, onCerrarSesion = () => {}
           <div className="d-flex gap-2">
             {usuario ? (
               <NavDropdown title={`Hola, ${usuario.nombre}`} align="end" id="menu-usuario">
+                {esPersonal(usuario) && (
+                  <NavDropdown.Item as={Link} to="/admin">Panel de administración</NavDropdown.Item>
+                )}
                 <NavDropdown.Item as="button" onClick={onCerrarSesion}>Cerrar sesión</NavDropdown.Item>
               </NavDropdown>
             ) : (

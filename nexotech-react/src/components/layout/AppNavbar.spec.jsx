@@ -85,4 +85,25 @@ describe('AppNavbar', () => {
 
     expect(onCerrarSesion).toHaveBeenCalledTimes(1);
   });
+
+  it('el personal ve el acceso al panel de administración y el cliente no', () => {
+    const { unmount } = render(
+      <MemoryRouter><AppNavbar usuario={{ nombre: 'Ana', rol: 'admin' }} /></MemoryRouter>
+    );
+    fireEvent.click(screen.getByText('Hola, Ana'));
+    expect(screen.getByText('Panel de administración').getAttribute('href')).toBe('/admin');
+    unmount();
+
+    render(<MemoryRouter><AppNavbar usuario={{ nombre: 'Pedro', rol: 'cliente' }} /></MemoryRouter>);
+    fireEvent.click(screen.getByText('Hola, Pedro'));
+    expect(screen.queryByText('Panel de administración')).toBeNull();
+  });
+
+  it('si no se entrega onCerrarSesion, el menú no falla al cerrar sesión', () => {
+    render(<MemoryRouter><AppNavbar usuario={{ nombre: 'Ana', rol: 'cliente' }} /></MemoryRouter>);
+
+    fireEvent.click(screen.getByText('Hola, Ana'));
+
+    expect(() => fireEvent.click(screen.getByText('Cerrar sesión'))).not.toThrow();
+  });
 });

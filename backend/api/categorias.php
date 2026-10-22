@@ -18,17 +18,20 @@ try {
             responder($pdo->query('SELECT id, slug, nombre FROM categorias ORDER BY nombre')->fetchAll());
 
         case 'POST':
+            requerir_rol($pdo, ['admin']);
             [$slug, $nombre] = validar_categoria(cuerpo_json());
             $pdo->prepare('INSERT INTO categorias (slug, nombre) VALUES (?, ?)')->execute([$slug, $nombre]);
             responder(['id' => (int) $pdo->lastInsertId(), 'slug' => $slug, 'nombre' => $nombre], 201);
 
         case 'PUT':
+            requerir_rol($pdo, ['admin']);
             if (!$id) error_api('Falta el id.');
             [$slug, $nombre] = validar_categoria(cuerpo_json());
             $pdo->prepare('UPDATE categorias SET slug = ?, nombre = ? WHERE id = ?')->execute([$slug, $nombre, $id]);
             responder(['id' => $id, 'slug' => $slug, 'nombre' => $nombre]);
 
         case 'DELETE':
+            requerir_rol($pdo, ['admin']);
             if (!$id) error_api('Falta el id.');
             $pdo->prepare('DELETE FROM categorias WHERE id = ?')->execute([$id]);
             responder(['eliminado' => $id]);

@@ -2,6 +2,7 @@
 CREATE DATABASE IF NOT EXISTS nexotech CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE nexotech;
 
+DROP TABLE IF EXISTS mensajes_contacto;
 DROP TABLE IF EXISTS orden_items;
 DROP TABLE IF EXISTS ordenes;
 DROP TABLE IF EXISTS productos;
@@ -69,6 +70,14 @@ CREATE TABLE orden_items (
   cantidad    INT UNSIGNED NOT NULL,
   CONSTRAINT fk_item_orden    FOREIGN KEY (orden_id)    REFERENCES ordenes(id) ON DELETE CASCADE,
   CONSTRAINT fk_item_producto FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE mensajes_contacto (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  nombre     VARCHAR(100) NOT NULL,
+  correo     VARCHAR(100) NOT NULL,
+  comentario VARCHAR(500) NOT NULL,
+  creado_en  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- Datos iniciales (los mismos 10 productos de la Evaluación Parcial 1)

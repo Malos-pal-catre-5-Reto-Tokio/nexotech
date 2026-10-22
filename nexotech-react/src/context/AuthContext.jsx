@@ -33,6 +33,12 @@ export function AuthProvider({ children }) {
     return dato;
   };
 
+  const actualizarPerfil = async (datos) => {
+    const dato = await authService.actualizarPerfil(datos);
+    setUsuario(dato);
+    return dato;
+  };
+
   const cerrarSesion = async () => {
     try {
       await authService.cerrarSesion();
@@ -41,7 +47,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const valor = { usuario, cargando, iniciarSesion, registrar, cerrarSesion };
+  const valor = { usuario, cargando, iniciarSesion, registrar, actualizarPerfil, cerrarSesion };
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>;
 }
 

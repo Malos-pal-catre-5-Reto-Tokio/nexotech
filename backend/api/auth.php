@@ -70,6 +70,33 @@ try {
             $_SESSION['usuario_id'] = (int) $pdo->lastInsertId();
             responder(usuario_actual($pdo), 201);
 
+        case 'perfil':
+            $actual = usuario_actual($pdo);
+            if (!$actual) error_api('Debes iniciar sesión.', 401);
+            $d = cuerpo_json();
+            $nombre = texto($d, 'nombre', 'El nombre', 50);
+            $apellidos = texto($d, 'apellidos', 'Los apellidos', 100);
+            $region = texto($d, 'region', 'La región', 80);
+            $comuna = texto($d, 'comuna', 'La comuna', 60);
+            $direccion = texto($d, 'direccion', 'La dirección', 150);
+            $pdo->prepare('UPDATE usuarios SET nombre = ?, apellidos = ?, region = ?, comuna = ?, direccion = ? WHERE id = ?')
+                ->execute([$nombre, $apellidos, $region, $comuna, $direccion, $actual['id']]);
+
+            $nueva = (string) ($d['passwordNueva'] ?? '');
+            if ($nueva !== '') {
+                if (mb_strlen($nueva) < PASSWORD_MIN || mb_strlen($nueva) > PASSWORD_MAX) {
+                    error_api('La contraseña debe tener entre ' . PASSWORD_MIN . ' y ' . PASSWORD_MAX . ' caracteres.');
+                }
+                $st = $pdo->prepare('SELECT password_hash FROM usuarios WHERE id = ?');
+                $st->execute([$actual['id']]);
+                if (!password_verify((string) ($d['passwordActual'] ?? ''), $st->fetchColumn())) {
+                    error_api('La contraseña actual no es correcta.', 401);
+                }
+                $pdo->prepare('UPDATE usuarios SET password_hash = ? WHERE id = ?')
+                    ->execute([password_hash($nueva, PASSWORD_DEFAULT), $actual['id']]);
+            }
+            responder(usuario_actual($pdo));
+
         case 'logout':
             $_SESSION = [];
             session_destroy();
